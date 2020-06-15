@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script crossorigin="anonymous" integrity="sha384-+jvb+jCJ37FkNjPyYLI3KJzQeD8pPFXUra3B/QJFqQ3txYrUPIP1eOfxK4h3cKZP"
+    src="https://lib.baomitu.com/vue/2.6.11/vue.js"></script>
+</head>
+
+<body>
+  <script>
+    // 发布订阅模式的具体产物：bus.js
+    // 注册事件：bus.$on('eventName',() => {})
+    // 触发事件：bus.$emit('eventName', val/obj...)
+    function EventEmitter() {
+      // 保存事件类型和事件
+      // {click: [fn1, fn2, ......], mouseover: [fn1, fn2, ......]}
+      // click: [fn1,fn2]  一个注册事件类型可能对应多个处理事件
+      this.eventObj = {}
+    }
+    //注册事件->保存事件类型和对应的事件处理函数
+    EventEmitter.prototype.$on = function (eventName, handler) {
+      // 如果第一次注册 this.eventObj[eventName] == undefined
+      // if (!this.eventObj[eventName]) {
+      //   this.eventObj[eventName] = []
+      //   this.eventObj[eventName].push(handler)
+      // } else {
+      //   // 如果非第一次
+      //   this.eventObj[eventName].push(handler)
+      // }
+      this.eventObj[eventName] = this.eventObj[eventName] || []
+      this.eventObj[eventName].push(handler)
+    }
+    // 触发事件->取出对应的事件处理函数并且调用  ...rest剩余参数  函数的参数时类数组对象
+    // var a = [1,2,3,4]  var b = [...a] b = [1,2,3,4]
+    EventEmitter.prototype.$emit = function (eventName, ...rest) {
+      // 判断是否保存过数据
+      // rest 是一个数组[10,20,30]
+      if (this.eventObj[eventName]) {
+        this.eventObj[eventName].forEach((handler) => {
+          // 展开操作运算符
+          // 普通函数this指向问题
+          // 1.如果函数调用时，是独立调用(前面啥也不加),this->window
+          // 发现函数内的this指向需要修改->bind/call/apply
+          // 2.如果函数调用时，是隐式绑定(bind/call/apply),此时this指向bind/call/apply的第一个实参
+          // handler(...rest) // handler(10, 20, 30)
+          handler.apply(this, rest)
+        });
+      }
+    }
+    EventEmitter.prototype.$remove = function (eventName, handler) {
+      if (this.eventObj[eventName]) {
+        //当前数组和传递过来的handler相等则移除掉
+        this.eventObj[eventName] =
+          this.eventObj[eventName].filter(item => item !== handler);
+      }
+      console.log(this.eventObj[eventName])
+    }
+    const bus = new EventEmitter()
+    console.log(bus)
+    // 注册事件
+    bus.$on('eventA', () => {
+      console.log('A1------>')
+    })
+    bus.$on('eventA', () => {
+      console.log('A2------>')
+    })
+    bus.$on('eventA', () => {
+      console.log('A3------>')
+    })
+    bus.$on('eventB', () => {
+      console.log('B------>')
+    })
+    bus.$on('eventC', () => {
+      console.log('C1------>')
+    })
+
+    bus.$remove('eventC', () => { console.log('C1------>') })
+    bus.$on('eventC', () => {
+      console.log('C2------>')
+    })
+    bus.$on('eventD', (num1, num2, num3) => {
+      console.log('D------>')
+      console.log(this)  // window
+    })
+    // 触发事件
+    bus.$emit('eventC')
+    bus.$emit('eventD', 10, 20, 30)
+    console.log(bus.eventObj)
+  </script>
+</body>
+
+</html>

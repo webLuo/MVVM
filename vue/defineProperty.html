@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script crossorigin="anonymous" integrity="sha384-+jvb+jCJ37FkNjPyYLI3KJzQeD8pPFXUra3B/QJFqQ3txYrUPIP1eOfxK4h3cKZP"
+    src="https://lib.baomitu.com/vue/2.6.11/vue.js"></script>
+</head>
+
+<body>
+  <script>
+    // defineProperty(obj,prop,descriptor)的基本使用  [把属性全部转为getter/setter]
+    // obj 要定义属性的对象
+    // prop 要定义或修改的属性的名称
+    // descriptor 要定义或修改的属性描述符 -->{描述属性的各种细节}
+    // return 加工后/修改后的对象
+    const obj = {
+      name: 'abc'
+    }
+    let _age = 100;
+    // 当访问对象属性时，会调用属性的get方法，当为对象属性赋值时，会调用属性的set方法
+    Object.defineProperty(obj, 'age', {
+      // value: 100, 不能和访问器(get和set)同时使用
+      // 取值
+      get() {
+        console.log('get------>')
+        return _age
+      },
+      // 赋值
+      set(val) {
+        console.log('set------>')
+        _age = val
+        // 更新视图
+      }
+    })
+    obj.age = 2000; // 调用set方法
+    console.log(obj.age)
+  </script>
+</body>
+
+</html>

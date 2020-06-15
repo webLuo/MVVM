@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script crossorigin="anonymous" integrity="sha384-+jvb+jCJ37FkNjPyYLI3KJzQeD8pPFXUra3B/QJFqQ3txYrUPIP1eOfxK4h3cKZP"
+    src="https://lib.baomitu.com/vue/2.6.11/vue.js"></script>
+</head>
+
+<body>
+  <script>
+    // 利用defineProperty模拟vue.js中的vm的结构
+    // data数据挂载到vm对象上
+    const data = {
+      msg: 'abc'
+    }
+    const vm = {}
+    Object.defineProperty(vm, 'msg', {
+      get() {
+        return data.msg
+      },
+      set(val) {
+        data.msg = val
+      }
+    })
+    console.log(vm)
+  </script>
+</body>
+
+</html>

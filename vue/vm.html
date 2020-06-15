@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script crossorigin="anonymous" integrity="sha384-+jvb+jCJ37FkNjPyYLI3KJzQeD8pPFXUra3B/QJFqQ3txYrUPIP1eOfxK4h3cKZP"
+    src="https://lib.baomitu.com/vue/2.6.11/vue.js"></script>
+</head>
+
+<body>
+  <!-- 设置Vue管理的视图 -->
+  <!-- 
+    编码模式： 发布订阅模式
+    1.监测数据变化  Object.defineProperty
+    2.编译视图->更新视图 
+  -->
+  <div id="app">
+    <!-- 当数据变化时，视图中的多个位置都要更新 -->
+    <p>{{msg}}</p>
+    <p>{{msg}}</p>
+    <input type="text" v-model="msg">
+  </div>
+  <script>
+    // 实例化Vue对象
+    const vm = new Vue({
+      // 指定Vue管理的视图
+      el: '#app',
+      data: {
+        msg: 'abc'
+      }
+    })
+    console.log(vm)
+  </script>
+</body>
+
+</html>

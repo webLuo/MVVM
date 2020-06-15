@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script crossorigin="anonymous" integrity="sha384-+jvb+jCJ37FkNjPyYLI3KJzQeD8pPFXUra3B/QJFqQ3txYrUPIP1eOfxK4h3cKZP"
+    src="https://lib.baomitu.com/vue/2.6.11/vue.js"></script>
+</head>
+
+<body>
+  <script>
+    'use strict'
+    const obj = {
+      name: 'abc'
+    }
+    let _age = 100;
+    Object.defineProperty(obj, 'age', {
+      // 是否可枚举  遍历
+      enumerable: true,
+      // 是否可配置 删除
+      // configurable: false,
+      value: 20,
+      // 是否可修改 修改
+      writable: true
+    })
+    // configurable: false 严格模式下删除属性会报错
+    // delete obj.age
+    // writable 默认为false 只有为true时，才可以被赋值运算符改变
+    obj.age = 20
+    console.log(obj)
+    for (var key in obj) {
+      console.log(key)
+    }
+  </script>
+</body>
+
+</html>
