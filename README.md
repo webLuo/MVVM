@@ -20,4 +20,4 @@ Object.defineProperty(obj,prop,descriptor)
   
   注册事件：bus.$on('eventName',() => {}) 
   
-  触发事件：bus.$emit('eventName', val/obj...)
+  触发事件：bus.$emit('eventName', val/obj...)   事件触发时，多个位置的函数都可以执行-->更新DOM
