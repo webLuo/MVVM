@@ -50,38 +50,28 @@
         });
       }
     }
-    EventEmitter.prototype.$remove = function (eventName, handler) {
-      if (this.eventObj[eventName]) {
-        //当前数组和传递过来的handler相等则移除掉
-        this.eventObj[eventName] =
-          this.eventObj[eventName].filter(item => item !== handler);
-      }
-      console.log(this.eventObj[eventName])
-    }
     const bus = new EventEmitter()
     console.log(bus)
     // 注册事件
-    bus.$on('eventA', () => {
+    bus.$on('eventA', function () {
       console.log('A1------>')
     })
-    bus.$on('eventA', () => {
+    bus.$on('eventA', function () {
       console.log('A2------>')
     })
-    bus.$on('eventA', () => {
+    bus.$on('eventA', function () {
       console.log('A3------>')
     })
-    bus.$on('eventB', () => {
+    bus.$on('eventB', function () {
       console.log('B------>')
     })
-    bus.$on('eventC', () => {
+    bus.$on('eventC', function () {
       console.log('C1------>')
     })
-
-    bus.$remove('eventC', () => { console.log('C1------>') })
-    bus.$on('eventC', () => {
+    bus.$on('eventC', function () {
       console.log('C2------>')
     })
-    bus.$on('eventD', (num1, num2, num3) => {
+    bus.$on('eventD', function (num1, num2, num3) {
       console.log('D------>')
       console.log(this)  // window
     })
